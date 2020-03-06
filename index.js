@@ -40,13 +40,33 @@ const server = http
           res.write("Ops, nenhum pet cadastrado com esse nome!");
         }
         break;
+        
+      case "/pets/vacinados":
+        let vacinados = petshop.contarVacinados();
+        res.write(vacinados);
+        break;
+
+      case "/vacina":
+        let nomePetVacina = queryString.nome;
+
+        let petsEncontradosVacina = petshop.buscarPet(nomePetVacina);
+        let petsVacinados = petshop.vacinarPet(petsEncontradosVacina[0]);
+
+        res.write(petsVacinados);
+        break;
+      case "/campanha":
+        let vacinadosCampanha = petshop.campanhaVacina();
+        res.write(vacinadosCampanha);
+        break;
+
       default:
-        res.write("tô perdido");
+        res.write("--Petshop DH--");
     }
 
     // req = request, res = responses
     res.end();
   })
+
   .listen(3000, "localhost", () => {
     // quando ligo servidor
     console.log("Servidor rodando :)");
