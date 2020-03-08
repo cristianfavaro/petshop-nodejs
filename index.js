@@ -23,11 +23,14 @@ const server = http
         break;
       case "/pets/add":
         let novoPet = queryString;
-        if (petshop.adicionarPet(novoPet)) {
-          res.write(`${novoPet.nome} foi adicionado a nossa lista!`);
-        } else {
-          res.write("Ops, algo deu errado!");
-        }
+        console.log(novoPet);
+
+        let retornoAdd = petshop.adicionarPet(novoPet);
+
+        console.log(retornoAdd);
+
+        res.write(retornoAdd);
+        
         break;
       case "/pets/buscar":
         let nomePet = queryString.nome;
@@ -54,14 +57,16 @@ const server = http
 
         res.write(petsVacinados);
         break;
-      case "/campanha":
-        let vacinadosCampanha = petshop.campanhaVacina();
-        res.write(vacinadosCampanha);
-        break;
+
+      case "/atender":
+        let petAtender = petshop.atenderPet(queryString.nome, queryString.servico);
+        res.write(petAtender);
+        break;       
 
       default:
         res.write("--Petshop DH--");
     }
+
 
     // req = request, res = responses
     res.end();

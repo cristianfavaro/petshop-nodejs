@@ -58,10 +58,6 @@ const listarPets = () => {
   return conteudo;
 };
 
-const adicionarPet = novoPet => {
-  return pets.push(novoPet);
-};
-
 const buscarPet = nomePet => {
   let petsEncontrados = pets.filter(pet => pet.nome == nomePet);
 
@@ -105,6 +101,8 @@ const campanhaVacina = () => {
 };
 
 
+// Até aqui está funcionando bem! 
+
 const validarDados = novoPet => {
   return (
     novoPet.nome &&
@@ -124,15 +122,78 @@ const adicionarPet = novoPet => {
     if (!novoPet.servicos) {
       novoPet.servicos = [];
     }
-
+    
     pets.push(novoPet);
+    return `${novoPet.nome} adicionado com sucesso.`;
   } else {
-    console.log("Ops, insira um argumento valido!");
+    return "Ops, insira um argumento valido!";
   }
 };
 
+const darBanhoPet = pet => {
+  console.log(pet, 'to aqui!!!!')
+  console.log(pet.nome)
+  pet.servicos.push("banho");
+  console.log(`${pet.nome} está de banho tomado!`);
+};
 
+const tosarPet = pet => {
+  pet.servicos.push("tosa");
+  console.log(`${pet.nome} está com cabelinho na régua.`);
+};
 
+const apararUnhasPet = pet => {
+  pet.servicos.push("corte de unhas");
+  console.log(`${pet.nome} está de unhas aparadas!`);
+};
 
+const atenderPet = (pet, servico) => {
 
-module.exports = { listarPets, adicionarPet, buscarPet, contarVacinados, vacinarPet, campanhaVacina };
+  let petEncontrado = buscarPet(pet);
+
+  switch (servico) {
+
+    case "banho":
+
+      darBanhoPet(petEncontrado[0])
+
+      break;
+
+    case "tosa":
+      console.log("to aqui!!! 2")
+      tosarPet(petEncontrado[0])
+
+      break;
+
+    case "manicure":
+
+      apararUnhasPet(petEncontrado[0])
+
+      break;
+    default:
+      return `Serviço número ${servico} não encontrado.`;
+
+  }
+
+  const pagar = () => {
+    console.log("Pagamento realizado com sucesso!");
+  };
+
+  pagar();
+
+  return `${petEncontrado[0].nome} recebeu os seguintes serviços: ${servico}. Volte sempre.`;
+};
+
+module.exports = {
+  listarPets, 
+  adicionarPet, 
+  buscarPet, 
+  contarVacinados, 
+  vacinarPet, 
+  campanhaVacina,
+  darBanhoPet,
+  atenderPet,
+  apararUnhasPet,
+  tosarPet,
+};
+
